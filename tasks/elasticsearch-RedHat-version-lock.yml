@@ -1,7 +1,12 @@
 ---
 - name: RedHat - install yum-version-lock
   become: yes
-  yum: name=yum-plugin-versionlock state=present update_cache=yes
+  yum: 
+    name: yum-plugin-versionlock 
+    state: present 
+    update_cache: yes 
+  environment: "{{proxy_env}}"
 - name: RedHat - lock elasticsearch version
   become: yes
   shell: yum versionlock delete 0:elasticsearch* ; yum versionlock add elasticsearch{% if es_version is defined and es_version != "" %}-{{ es_version }}{% endif %}
+  environment: "{{proxy_env}}"
